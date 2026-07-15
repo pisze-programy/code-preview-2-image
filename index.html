@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code to Image</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Bricolage+Grotesque:opsz@12..96&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=League+Gothic&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+    <script src="./node_modules/html-to-image/dist/html-to-image.js"></script>
+    <script src="./node_modules/downloadjs/download.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="control-panel">
+            <input class="hidden" accept="image" type="file" name="background">
+
+            <label class="control-label">
+                <span class="control-label-text">Spacing</span>
+                <input pattern="[0-9]+([.][0-9]{1,2})?" placeholder="48" class="control-input" type="tel" value="50" name="spacing">
+            </label>
+
+            <label class="control-label">
+                <span class="control-label-text">Blur</span>
+                <input pattern="[0-9]+([.][0-9]{1,2})?" placeholder="10" class="control-input" type="number" value="5" name="blur">
+            </label>
+
+            <label class="control-label opacity-control">
+                <span class="control-label-text appearance-none">Opacity (0.5)</span>
+                <div class="control-input-group">
+                    <input min="0" max="1" step="0.1" type="range" value="0.5">
+                </div>
+            </label>
+
+            <label class="flex flex-col">
+                <span class="text-xs text-neutral-400 font-light appearance-none">Language</span>
+                <select name="theme" class="outline-none appearance-none">
+                    <option value="1c">1c</option><option value="1c-query">1c-query</option><option value="abap">abap</option><option value="actionscript-3">actionscript-3</option><option value="ada">ada</option><option value="adoc">adoc</option><option value="angular-html">angular-html</option><option value="angular-ts">angular-ts</option><option value="apache">apache</option><option value="apex">apex</option><option value="apl">apl</option><option value="applescript">applescript</option><option value="ara">ara</option><option value="asciidoc">asciidoc</option><option value="asm">asm</option><option value="astro">astro</option><option value="awk">awk</option><option value="ballerina">ballerina</option><option value="bash">bash</option><option value="bat">bat</option><option value="batch">batch</option><option value="be">be</option><option value="beancount">beancount</option><option value="berry">berry</option><option value="bibtex">bibtex</option><option value="bicep">bicep</option><option value="blade">blade</option><option value="bsl">bsl</option><option value="c">c</option><option value="c#">c#</option><option value="c++">c++</option><option value="cadence">cadence</option><option value="cairo">cairo</option><option value="cdc">cdc</option><option value="cjs">cjs</option><option value="clarity">clarity</option><option value="clj">clj</option><option value="clojure">clojure</option><option value="closure-templates">closure-templates</option><option value="cmake">cmake</option><option value="cmd">cmd</option><option value="cobol">cobol</option><option value="codeowners">codeowners</option><option value="codeql">codeql</option><option value="coffee">coffee</option><option value="coffeescript">coffeescript</option><option value="common-lisp">common-lisp</option><option value="console">console</option><option value="coq">coq</option><option value="cpp">cpp</option><option value="cql">cql</option><option value="crystal">crystal</option><option value="cs">cs</option><option value="csharp">csharp</option><option value="css">css</option><option value="csv">csv</option><option value="cts">cts</option><option value="cue">cue</option><option value="cypher">cypher</option><option value="d">d</option><option value="dart">dart</option><option value="dax">dax</option><option value="desktop">desktop</option><option value="diff">diff</option><option value="docker">docker</option><option value="dockerfile">dockerfile</option><option value="dotenv">dotenv</option><option value="dream-maker">dream-maker</option><option value="edge">edge</option><option value="elisp">elisp</option><option value="elixir">elixir</option><option value="elm">elm</option><option value="emacs-lisp">emacs-lisp</option><option value="erb">erb</option><option value="erl">erl</option><option value="erlang">erlang</option><option value="f">f</option><option value="f#">f#</option><option value="f03">f03</option><option value="f08">f08</option><option value="f18">f18</option><option value="f77">f77</option><option value="f90">f90</option><option value="f95">f95</option><option value="fennel">fennel</option><option value="fish">fish</option><option value="fluent">fluent</option><option value="for">for</option><option value="fortran-fixed-form">fortran-fixed-form</option><option value="fortran-free-form">fortran-free-form</option><option value="fs">fs</option><option value="fsharp">fsharp</option><option value="fsl">fsl</option><option value="ftl">ftl</option><option value="gdresource">gdresource</option><option value="gdscript">gdscript</option><option value="gdshader">gdshader</option><option value="genie">genie</option><option value="gherkin">gherkin</option><option value="git-commit">git-commit</option><option value="git-rebase">git-rebase</option><option value="gjs">gjs</option><option value="gleam">gleam</option><option value="glimmer-js">glimmer-js</option><option value="glimmer-ts">glimmer-ts</option><option value="glsl">glsl</option><option value="gnuplot">gnuplot</option><option value="go">go</option><option value="gql">gql</option><option value="graphql">graphql</option><option value="groovy">groovy</option><option value="gts">gts</option><option value="hack">hack</option><option value="haml">haml</option><option value="handlebars">handlebars</option><option value="haskell">haskell</option><option value="haxe">haxe</option><option value="hbs">hbs</option><option value="hcl">hcl</option><option value="hjson">hjson</option><option value="hlsl">hlsl</option><option value="hs">hs</option><option value="html">html</option><option value="html-derivative">html-derivative</option><option value="http">http</option><option value="hurl">hurl</option><option value="hxml">hxml</option><option value="hy">hy</option><option value="imba">imba</option><option value="ini">ini</option><option value="jade">jade</option><option value="java">java</option><option value="javascript">javascript</option><option value="jinja">jinja</option><option value="jison">jison</option><option value="jl">jl</option><option value="js">js</option><option value="json">json</option><option value="json5">json5</option><option value="jsonc">jsonc</option><option value="jsonl">jsonl</option><option value="jsonnet">jsonnet</option><option value="jssm">jssm</option><option value="jsx">jsx</option><option value="julia">julia</option><option value="kdl">kdl</option><option value="kotlin">kotlin</option><option value="kql">kql</option><option value="kt">kt</option><option value="kts">kts</option><option value="kusto">kusto</option><option value="latex">latex</option><option value="lean">lean</option><option value="lean4">lean4</option><option value="less">less</option><option value="liquid">liquid</option><option value="lisp">lisp</option><option value="lit">lit</option><option value="llvm">llvm</option><option value="log">log</option><option value="logo">logo</option><option value="lua">lua</option><option value="luau">luau</option><option value="make">make</option><option value="makefile">makefile</option><option value="markdown">markdown</option><option value="marko">marko</option><option value="matlab">matlab</option><option value="md">md</option><option value="mdc">mdc</option><option value="mdx">mdx</option><option value="mediawiki">mediawiki</option><option value="mermaid">mermaid</option><option value="mips">mips</option><option value="mipsasm">mipsasm</option><option value="mjs">mjs</option><option value="mmd">mmd</option><option value="mojo">mojo</option><option value="move">move</option><option value="mts">mts</option><option value="nar">nar</option><option value="narrat">narrat</option><option value="nextflow">nextflow</option><option value="nf">nf</option><option value="nginx">nginx</option><option value="nim">nim</option><option value="nix">nix</option><option value="nu">nu</option><option value="nushell">nushell</option><option value="objc">objc</option><option value="objective-c">objective-c</option><option value="objective-cpp">objective-cpp</option><option value="ocaml">ocaml</option><option value="pascal">pascal</option><option value="perl">perl</option><option value="perl6">perl6</option><option value="php">php</option><option value="pkl">pkl</option><option value="plsql">plsql</option><option value="po">po</option><option value="polar">polar</option><option value="postcss">postcss</option><option value="pot">pot</option><option value="potx">potx</option><option value="powerquery">powerquery</option><option value="powershell">powershell</option><option value="prisma">prisma</option><option value="prolog">prolog</option><option value="properties">properties</option><option value="proto">proto</option><option value="protobuf">protobuf</option><option value="ps">ps</option><option value="ps1">ps1</option><option value="pug">pug</option><option value="puppet">puppet</option><option value="purescript">purescript</option><option value="py">py</option><option value="python">python</option><option value="ql">ql</option><option value="qml">qml</option><option value="qmldir">qmldir</option><option value="qss">qss</option><option value="r">r</option><option value="racket">racket</option><option value="raku">raku</option><option value="razor">razor</option><option value="rb">rb</option><option value="reg">reg</option><option value="regex">regex</option><option value="regexp">regexp</option><option value="rel">rel</option><option value="riscv">riscv</option><option value="rosmsg">rosmsg</option><option value="rs">rs</option><option value="rst">rst</option><option value="ruby">ruby</option><option value="rust">rust</option><option value="sas">sas</option><option value="sass">sass</option><option value="scala">scala</option><option value="scheme">scheme</option><option value="scss">scss</option><option value="sdbl">sdbl</option><option value="sh">sh</option><option value="shader">shader</option><option value="shaderlab">shaderlab</option><option value="shell">shell</option><option value="shellscript">shellscript</option><option value="shellsession">shellsession</option><option value="smalltalk">smalltalk</option><option value="solidity">solidity</option><option value="soy">soy</option><option value="sparql">sparql</option><option value="spl">spl</option><option value="splunk">splunk</option><option value="sql">sql</option><option value="ssh-config">ssh-config</option><option value="stata">stata</option><option value="styl">styl</option><option value="stylus">stylus</option><option value="svelte">svelte</option><option value="swift">swift</option><option value="system-verilog">system-verilog</option><option value="systemd">systemd</option><option value="talon">talon</option><option value="talonscript">talonscript</option><option value="tasl">tasl</option><option value="tcl">tcl</option><option value="templ">templ</option><option value="terraform">terraform</option><option value="tex">tex</option><option value="tf">tf</option><option value="tfvars">tfvars</option><option value="toml">toml</option><option value="ts">ts</option><option value="ts-tags">ts-tags</option><option value="tsp">tsp</option><option value="tsv">tsv</option><option value="tsx">tsx</option><option value="turtle">turtle</option><option value="twig">twig</option><option value="typ">typ</option><option value="typescript">typescript</option><option value="typespec">typespec</option><option value="typst">typst</option><option value="v">v</option><option value="vala">vala</option><option value="vb">vb</option><option value="verilog">verilog</option><option value="vhdl">vhdl</option><option value="vim">vim</option><option value="viml">viml</option><option value="vimscript">vimscript</option><option value="vue">vue</option><option value="vue-html">vue-html</option><option value="vue-vine">vue-vine</option><option value="vy">vy</option><option value="vyper">vyper</option><option value="wasm">wasm</option><option value="wenyan">wenyan</option><option value="wgsl">wgsl</option><option value="wiki">wiki</option><option value="wikitext">wikitext</option><option value="wit">wit</option><option value="wl">wl</option><option value="wolfram">wolfram</option><option value="xml">xml</option><option value="xsl">xsl</option><option value="yaml">yaml</option><option value="yml">yml</option><option value="zenscript">zenscript</option><option value="zig">zig</option><option value="zsh">zsh</option>
+                </select>
+            </label>
+
+            <label class="flex flex-col">
+                <span class="text-xs text-neutral-400 font-light">Theme</span>
+                <select name="theme" class="outline-none appearance-none">
+                    <option value="andromeeda">andromeeda</option><option value="aurora-x">aurora-x</option><option value="ayu-dark">ayu-dark</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option><option value="dark-plus">dark-plus</option><option value="dracula">dracula</option><option value="dracula-soft">dracula-soft</option><option value="everforest-dark">everforest-dark</option><option value="everforest-light">everforest-light</option><option value="github-dark">github-dark</option><option value="github-dark-default">github-dark-default</option><option value="github-dark-dimmed">github-dark-dimmed</option><option value="github-dark-high-contrast">github-dark-high-contrast</option><option value="github-light">github-light</option><option value="github-light-default">github-light-default</option><option value="github-light-high-contrast">github-light-high-contrast</option><option value="gruvbox-dark-hard">gruvbox-dark-hard</option><option value="gruvbox-dark-medium">gruvbox-dark-medium</option><option value="gruvbox-dark-soft">gruvbox-dark-soft</option><option value="gruvbox-light-hard">gruvbox-light-hard</option><option value="gruvbox-light-medium">gruvbox-light-medium</option><option value="gruvbox-light-soft">gruvbox-light-soft</option><option value="houston">houston</option><option value="kanagawa-dragon">kanagawa-dragon</option><option value="kanagawa-lotus">kanagawa-lotus</option><option value="kanagawa-wave">kanagawa-wave</option><option value="laserwave">laserwave</option><option value="light-plus">light-plus</option><option value="material-theme">material-theme</option><option value="material-theme-darker">material-theme-darker</option><option value="material-theme-lighter">material-theme-lighter</option><option value="material-theme-ocean">material-theme-ocean</option><option value="material-theme-palenight">material-theme-palenight</option><option value="min-dark">min-dark</option><option value="min-light">min-light</option><option value="monokai">monokai</option><option value="night-owl">night-owl</option><option value="nord">nord</option><option value="one-dark-pro">one-dark-pro</option><option value="one-light">one-light</option><option value="plastic">plastic</option><option value="poimandres">poimandres</option><option value="red">red</option><option value="rose-pine">rose-pine</option><option value="rose-pine-dawn">rose-pine-dawn</option><option value="rose-pine-moon">rose-pine-moon</option><option value="slack-dark">slack-dark</option><option value="slack-ochin">slack-ochin</option><option value="snazzy-light">snazzy-light</option><option value="solarized-dark">solarized-dark</option><option value="solarized-light">solarized-light</option><option value="synthwave-84">synthwave-84</option><option value="tokyo-night">tokyo-night</option><option value="vesper">vesper</option><option value="vitesse-black">vitesse-black</option><option value="vitesse-dark">vitesse-dark</option><option value="vitesse-light">vitesse-light</option>
+                </select>
+            </label>
+            <button class="control-button" title="Save" aria-label="Save">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-to-line" aria-hidden="true">
+                    <path d="M12 17V3"></path>
+                    <path d="m6 11 6 6 6-6"></path>
+                    <path d="M19 21H5"></path>
+                </svg>
+            </button>
+        </aside>
+
+        <div class="editor-background">
+            <div class="editor-section">
+                <textarea id="code">
+                    function getPiApproximations() {
+                      let pi = 0, n = 1, sign = 1;
+                      while (true) {
+                        pi += sign * (4 / n);
+                        yield pi;
+                        n += 2;
+                        sign = -sign;
+                      }
+                    }
+                </textarea>
+            </div>
+        </div>
+
+        <div id="preview" hidden>
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <script type="module">
+      import { getHighlighter } from 'https://esm.sh/shiki';
+      import * as htmlToImage from 'https://esm.sh/html-to-image';
+
+      let highlighter;
+        const codeEl = document.getElementById('code');
+        const themeEl = document.querySelector('select[name="theme"]');
+        const bgUpload = document.querySelector('input[name="background"]');
+        const blurEl = document.querySelector('input[name="blur"]');
+        const paddingEl = document.querySelector('input[name="spacing"]');
+        const canvas = document.getElementById('canvas');
+        const exportBtn = document.querySelector('button[title="Save"]');
+
+        let currentTheme = 'github-dark';
+        let bgImage = null;
+
+        fetch('default-bg.jpg')
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                }
+                return null;
+            })
+            .then(blob => {
+                if (blob) {
+                    bgImage = URL.createObjectURL(blob);
+                    blurEl.value = 5;
+                    paddingEl.value = 50;
+                    updatePreview();
+                }
+            });
+
+        function populateThemes() {}
+
+        async function updatePreview() {
+            try {
+                if (!highlighter) {
+                    highlighter = await getHighlighter({
+                        themes: [currentTheme],
+                        langs: ['javascript']
+                    });
+                }
+                document.getElementById('preview').replaceChildren(canvas);
+
+                const highlighted = highlighter.codeToHtml(codeEl.value, { lang: 'javascript' });
+
+                const tempContainer = document.createElement('div');
+                tempContainer.style.padding = `${getPaddingValue()}px`;
+                tempContainer.style.backgroundImage = bgImage ? `url(${bgImage})` : 'none';
+                tempContainer.style.backgroundSize = 'cover';
+                tempContainer.style.backgroundPosition = 'center';
+
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = highlighted;
+                tempDiv.style.filter = `blur(${blurEl.value}px)`;
+
+                tempContainer.appendChild(tempDiv);
+
+                await htmlToImage.toCanvas(canvas, { backgroundColor: 'transparent' });
+            } catch (e) {
+                console.error('Error updating preview:', e);
+                updatePreviewFallback();
+            }
+        }
+
+        function getPaddingValue() {
+            return parseInt(paddingEl.value) || 20;
+        }
+
+        function updatePreviewFallback() {
+            const ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.font = '14px monospace';
+            ctx.fillText(codeEl.value.substring(0, 100) + (codeEl.value.length > 100 ? '...' : ''), 20, 30);
+        }
+
+        codeEl.addEventListener('input', updatePreview);
+        themeEl.addEventListener('change', () => {
+            currentTheme = themeEl.value;
+            updatePreview();
+        });
+
+        bgUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                bgImage = URL.createObjectURL(file);
+                updatePreview();
+            }
+        });
+        [blurEl, paddingEl].forEach(el => el.addEventListener('input', updatePreview));
+
+        exportBtn.addEventListener('click', async () => {
+            try {
+                const dataUrl = await htmlToImage.toPng(canvas);
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = 'code-snapshot.png';
+                link.click();
+            } catch (e) {
+                console.error('Export failed:', e);
+            }
+        });
+
+        populateThemes();
+        updatePreview();
+    </script>
+</body>
+</html>
