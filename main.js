@@ -1,6 +1,7 @@
 import { createHighlighter } from 'shiki';
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+import defaultBg from './default-bg.jpg';
 
 const codeEl = document.getElementById('code');
 const highlightEl = document.getElementById('code-highlight');
@@ -18,21 +19,12 @@ const uploadBgBtn = document.getElementById('upload-bg-btn');
 let highlighter;
 let currentLanguage = 'typescript';
 let currentTheme = 'github-dark';
-let bgImage = null;
+let bgImage = defaultBg;
 
 languageEl.value = currentLanguage;
 themeEl.value = currentTheme;
 opacityEl.value = '0.5';
 terminalWindow.style.setProperty('--terminal-opacity', opacityEl.value);
-
-fetch('default-bg.jpg')
-  .then((response) => (response.ok ? response.blob() : null))
-  .then((blob) => {
-    if (blob) {
-      bgImage = URL.createObjectURL(blob);
-      updateBackground();
-    }
-  });
 
 async function ensureHighlighter() {
   if (!highlighter) {

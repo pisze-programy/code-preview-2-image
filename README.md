@@ -7,7 +7,7 @@ Vibe codded - $9.172 (gemini-flash-latest)
 ## Features
 - Live preview with syntax highlighting via Shiki CDN
 - Multiple themes (github-dark, monokai, solarized-light, etc.)
-- Upload custom background image
+- Upload a custom background image
 - Adjust blur and padding
 - Export to Image
 
