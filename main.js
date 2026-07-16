@@ -60,7 +60,7 @@ async function updatePreview() {
 
 function updateSpacing() {
   const spacing = Number.parseInt(paddingEl.value, 10) || 20;
-  bgPreview.style.padding = `${spacing}px`;
+  bgPreview.style.setProperty('--bg-spacing', `${spacing}px`);
 }
 
 function updateOpacity() {

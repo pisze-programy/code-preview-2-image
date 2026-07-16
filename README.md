@@ -1,5 +1,7 @@
 # Code Preview to Image
 Code image generator - browser-based rendering
+Vibe codded - $9.172 (gemini-flash-latest)
+
 ![Output Preview](docs/output-preview.jpg)
 
 ## Features
