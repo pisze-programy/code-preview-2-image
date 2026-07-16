@@ -25,14 +25,18 @@ Control the background transparency of your terminal window. No matter what opac
 
 ## Key Features
 
-- **macOS Window Aesthetic:** True macOS title bar styling with red, yellow, and green control dots on the left, and centered "PiszeProgramy.pl" window title.
-- **Instant Syntax Highlighting:** Embedded Shiki highlighter dynamically colors code based on selected language and theme (defaults to TypeScript + github-dark).
-- **Fit-to-Content Sizing:** Both terminal window and background image auto-fit exactly to the code length and line width, creating tailored crops.
-- **Dynamic Spacing (Padding):** Customize the background margin surrounding your terminal. On mobile viewports, spacing dynamically scales down to keep the window perfectly framed.
-- **Upload Custom Backgrounds:** Click the Lucide Image icon to trigger a file selector and apply any local image as your backdrop instantly.
-- **IDE-Like Indentation:** Pressing Tab inside the code editor inserts exactly 4 spaces instead of shifting browser focus.
-- **Responsive Layout:** Adaptive fonts scale dynamically on smaller viewports using CSS clamp(), keeping code readable on mobile devices.
-- **High-Quality PNG Export:** The Save button (styled with macOS blue) renders the entire container with lossless quality using html-to-image and downloadjs.
+The application features a beautifully polished macOS-style floating control panel designed for simple, direct, and powerful customization of your code snapshot:
+
+![Control Panel Preview](docs/control-panel-preview.png)
+
+- **Custom Background:** Click the local file picker icon to upload and apply any image from your computer instantly as the backdrop of your code screenshot.
+- **Translucent Opacity Slider:** Dynamically scale the terminal's background transparency from 0 to 100%. Even at low opacity values, a gorgeous native-style glass blur is maintained behind the window.
+- **Dynamic Spacing (Padding):** Control the padding margins surrounding the terminal. On small viewports, the margin automatically clamps down to prevent squeezing the code editor area.
+- **Language Syntax Highlighting:** Instantly switch between languages (such as TypeScript, Python, and CSS). The syntax highlight updates immediately as you edit.
+- **Theme Color Selection:** Choose from numerous professional Shiki code themes (including github-dark, monokai, solarized-light) to fit your preferred aesthetic.
+- **IDE-Like Editor Formatting:** Write and format code naturally. Tab key presses insert exactly 4 spaces instead of shifting browser focus.
+- **Responsive Layout:** Adaptive fonts scale dynamically on smaller screens using CSS clamp(), keeping code fully readable on mobile devices.
+- **High-Quality PNG Export:** The Save button renders the entire container with lossless quality using html-to-image and downloadjs.
 
 ---
 
