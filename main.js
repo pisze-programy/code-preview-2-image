@@ -1,106 +1,126 @@
 import { createHighlighter } from 'shiki';
 import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
 
-let highlighter;
 const codeEl = document.getElementById('code');
+const highlightEl = document.getElementById('code-highlight');
+const languageEl = document.querySelector('select[name="language"]');
 const themeEl = document.querySelector('select[name="theme"]');
 const bgUpload = document.querySelector('input[name="background"]');
-const blurEl = document.querySelector('input[name="blur"]');
 const paddingEl = document.querySelector('input[name="spacing"]');
-const canvas = document.getElementById('canvas');
+const opacityEl = document.querySelector('.opacity-control input[type="range"]');
+const terminalWindow = document.querySelector('.terminal-window');
 const exportBtn = document.querySelector('button[title="Save"]');
+const bgPreview = document.querySelector('.editor-background');
+const opacityLabelText = document.querySelector('.opacity-control .control-label-text');
+const uploadBgBtn = document.getElementById('upload-bg-btn');
 
+let highlighter;
+let currentLanguage = 'typescript';
 let currentTheme = 'github-dark';
 let bgImage = null;
 
+languageEl.value = currentLanguage;
+themeEl.value = currentTheme;
+opacityEl.value = '0.5';
+terminalWindow.style.setProperty('--terminal-opacity', opacityEl.value);
+
 fetch('default-bg.jpg')
-  .then(response => {
-    if (response.ok) {
-      return response.blob();
-    }
-    return null;
-  })
-  .then(blob => {
+  .then((response) => (response.ok ? response.blob() : null))
+  .then((blob) => {
     if (blob) {
       bgImage = URL.createObjectURL(blob);
-      blurEl.value = 5;
-      paddingEl.value = 50;
-      updatePreview();
+      updateBackground();
     }
   });
 
-function populateThemes() {}
+async function ensureHighlighter() {
+  if (!highlighter) {
+    highlighter = await createHighlighter({
+      themes: [currentTheme],
+      langs: [currentLanguage],
+    });
+  }
+}
+
+function updateBackground() {
+  bgPreview.style.backgroundImage = bgImage ? `url(${bgImage})` : 'none';
+}
 
 async function updatePreview() {
   try {
-    if (!highlighter) {
-      highlighter = await createHighlighter({
-        theme: currentTheme,
-        langs: ['javascript']
-      });
-    }
-    document.getElementById('preview').replaceChildren(canvas);
-
-    const highlighted = highlighter.codeToHtml(codeEl.value, { lang: 'javascript' });
-
-    const tempContainer = document.createElement('div');
-    tempContainer.style.padding = `${getPaddingValue()}px`;
-    tempContainer.style.backgroundImage = bgImage ? `url(${bgImage})` : 'none';
-    tempContainer.style.backgroundSize = 'cover';
-    tempContainer.style.backgroundPosition = 'center';
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = highlighted;
-    tempDiv.style.filter = `blur(${blurEl.value}px)`;
-
-    tempContainer.appendChild(tempDiv);
-
-    await htmlToImage.toCanvas(canvas, { backgroundColor: 'transparent' });
-  } catch (e) {
-    console.error('Error updating preview:', e);
-    updatePreviewFallback();
+    await ensureHighlighter();
+    const html = highlighter.codeToHtml(codeEl.value, { lang: currentLanguage, theme: currentTheme });
+    highlightEl.innerHTML = html;
+  } catch (error) {
+    console.error('Error updating preview:', error);
+    highlightEl.textContent = codeEl.value;
   }
 }
 
-function getPaddingValue() {
-  return parseInt(paddingEl.value) || 20;
+function updateSpacing() {
+  const spacing = Number.parseInt(paddingEl.value, 10) || 20;
+  bgPreview.style.padding = `${spacing}px`;
 }
 
-function updatePreviewFallback() {
-  const ctx = canvas.getContext('2d');
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'white';
-  ctx.font = '14px monospace';
-  ctx.fillText(codeEl.value.substring(0, 100) + (codeEl.value.length > 100 ? '...' : ''), 20, 30);
+function updateOpacity() {
+  terminalWindow.style.setProperty('--terminal-opacity', opacityEl.value);
+  if (opacityLabelText) {
+    opacityLabelText.textContent = `Opacity (${opacityEl.value})`;
+  }
 }
 
 codeEl.addEventListener('input', updatePreview);
-themeEl.addEventListener('change', () => {
-  currentTheme = themeEl.value;
-  updatePreview();
-});
-
-bgUpload.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    bgImage = URL.createObjectURL(file);
+codeEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const start = codeEl.selectionStart;
+    const end = codeEl.selectionEnd;
+    const value = codeEl.value;
+    codeEl.value = value.substring(0, start) + '    ' + value.substring(end);
+    codeEl.selectionStart = codeEl.selectionEnd = start + 4;
     updatePreview();
   }
 });
-[blurEl, paddingEl].forEach(el => el.addEventListener('input', updatePreview));
+languageEl.addEventListener('change', async () => {
+  currentLanguage = languageEl.value;
+  highlighter = null;
+  await updatePreview();
+});
+
+themeEl.addEventListener('change', async () => {
+  currentTheme = themeEl.value;
+  highlighter = null;
+  await updatePreview();
+});
+
+bgUpload.addEventListener('change', (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  bgImage = URL.createObjectURL(file);
+  updateBackground();
+});
+
+paddingEl.addEventListener('input', updateSpacing);
+opacityEl.addEventListener('input', () => {
+    updateOpacity();
+    terminalWindow.style.setProperty('--terminal-opacity', opacityEl.value);
+});
+
+if (uploadBgBtn) {
+  uploadBgBtn.addEventListener('click', () => bgUpload.click());
+}
 
 exportBtn.addEventListener('click', async () => {
   try {
-    const dataUrl = await htmlToImage.toPng(canvas);
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'code-snapshot.png';
-    link.click();
-  } catch (e) {
-    console.error('Export failed:', e);
+    const dataUrl = await htmlToImage.toPng(bgPreview, { backgroundColor: 'transparent' });
+    download(dataUrl, 'code-snapshot.png', 'image/png');
+  } catch (error) {
+    console.error('Export failed:', error);
   }
 });
 
-populateThemes();
+updateBackground();
+updateSpacing();
+updateOpacity();
 updatePreview();
