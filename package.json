@@ -1,15 +1,22 @@
 {
-    "name": "code-2-image",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {},
-    "browserslist": [
-        "last 2 Chrome versions",
-        "last 2 Firefox versions"
-    ],
-    "dependencies": {
-        "downloadjs": "^1.4.7",
-        "html-to-image": "^1.11.11",
-        "shiki": "^4.3.1"
-    }
+  "name": "code-2-image",
+  "version": "1.0.0",
+  "private": true,
+  "browserslist": [
+      "last 2 Chrome versions",
+      "last 2 Firefox versions"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+      "downloadjs": "^1.4.7",
+      "html-to-image": "^1.11.11",
+      "shiki": "^4.3.1"
+  },
+  "devDependencies": {
+      "vite": "^8.1.5"
+  }
 }
