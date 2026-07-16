@@ -33,8 +33,10 @@ body {
 }
 
 .editor-background {
-    width: min(100%, 1200px);
-    min-height: min(100vh, 760px);
+    width: fit-content;
+    height: fit-content;
+    min-width: 400px;
+    max-width: 100%;
     padding: var(--bg-spacing, 20px);
     box-sizing: border-box;
     border-radius: 32px;
@@ -46,7 +48,8 @@ body {
 
 .terminal-window {
     --terminal-opacity: 0.5;
-    width: 100%;
+    width: fit-content;
+    min-width: 360px;
     max-width: 900px;
     margin: auto;
     display: flex;
@@ -381,12 +384,16 @@ textarea:focus, input:focus, select:focus {
         min-height: auto;
         padding: clamp(8px, calc(var(--bg-spacing, 50px) * 0.3), 16px) !important;
         border-radius: 20px;
+        min-width: 0 !important;
+        width: 100% !important;
     }
 
     .terminal-window {
         height: auto;
         min-height: auto;
         border-radius: 16px;
+        min-width: 0 !important;
+        width: 100% !important;
     }
 
     .terminal-bar {
