@@ -13,6 +13,7 @@
     --shadow-color: rgba(0, 0, 0, 0.05);
     --background-color-dark: #1a1a1a;
     --text-color-dark: #ccc;
+    --bg-spacing: 20px;
 }
 
 body {
@@ -39,7 +40,7 @@ body {
     max-width: 100%;
     padding: var(--bg-spacing, 20px);
     box-sizing: border-box;
-    border-radius: 32px;
+    border-radius: 24px;
     background: url("./default-bg.jpg") center / cover no-repeat;
     display: flex;
     align-items: center;
@@ -125,7 +126,7 @@ body {
     letter-spacing: normal !important;
     word-spacing: normal !important;
     text-transform: none !important;
-    text-indent: 0px !important;
+    text-indent: 0 !important;
     text-shadow: none !important;
     box-sizing: border-box !important;
     padding: 0 !important;
@@ -289,6 +290,19 @@ textarea:focus, input:focus, select:focus {
     border: 1px solid rgba(255, 255, 255, 0.12);
     color: #f5f5f5;
     cursor: pointer;
+}
+
+.spinner {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .control-panel .control-button:hover {

@@ -42,8 +42,7 @@ function updateBackground() {
 async function updatePreview() {
   try {
     await ensureHighlighter();
-    const html = highlighter.codeToHtml(codeEl.value, { lang: currentLanguage, theme: currentTheme });
-    highlightEl.innerHTML = html;
+    highlightEl.innerHTML = highlighter.codeToHtml(codeEl.value, { lang: currentLanguage, theme: currentTheme });
   } catch (error) {
     console.error('Error updating preview:', error);
     highlightEl.textContent = codeEl.value;
@@ -104,11 +103,20 @@ if (uploadBgBtn) {
 }
 
 exportBtn.addEventListener('click', async () => {
+  const originalContent = exportBtn.innerHTML;
   try {
+    exportBtn.disabled = true;
+    exportBtn.innerHTML = '<div class="spinner"></div>';
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
     const dataUrl = await htmlToImage.toPng(bgPreview, { backgroundColor: 'transparent' });
     download(dataUrl, 'code-snapshot.png', 'image/png');
   } catch (error) {
     console.error('Export failed:', error);
+  } finally {
+    exportBtn.innerHTML = originalContent;
+    exportBtn.disabled = false;
   }
 });
 
